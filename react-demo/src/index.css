@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Poppins&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Poppins", sans-serif; display: flex;
+justify-content: center; align-items: center; min-height: 100vh;
+background:url(./Components/Assets/backgroundnew.png) no-repeat;
+background-size: cover;
+background-position: center;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
