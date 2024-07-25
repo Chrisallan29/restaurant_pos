@@ -8,7 +8,7 @@ import "./Odashboard.css";
 import { getAuth } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../LoginForm/config';
-import { useNavigate } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ODashboard = () => {
     const theme = useTheme();
@@ -18,6 +18,7 @@ const ODashboard = () => {
     const colorMode = useContext(colorModeContext);
     const auth = getAuth();
     const user = auth.currentUser;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTableData = async () => {
@@ -39,7 +40,7 @@ const ODashboard = () => {
         };
 
         fetchTableData();
-    }, [user]);
+    }, [user, navigate]);
 
     const getRandomKey = (obj) => {
         const keys = Object.keys(obj);
@@ -56,6 +57,11 @@ const ODashboard = () => {
         const colorCategory = getRandomKey(colors);
         const shade = '700';
         return colors[colorCategory][shade];
+    };
+
+    const handleTableClick = (table) => {
+        console.log(`${table.type} Table ${table.index} clicked`);
+        navigate(`/table/${table.index}`);
     };
 
     // Generate an array of table indices, including both dine-in and takeaway tables
@@ -88,7 +94,7 @@ const ODashboard = () => {
                                     position: 'relative',
                                 }}
                                 className={table.isOccupied ? 'occupied' : 'vacant'}
-                                onClick={() => {console.log(`${table.type} Table ${table.index} clicked`) }}
+                                onClick={() => {handleTableClick(table)}}
                             >
                                 <Typography
                                     variant="h6"

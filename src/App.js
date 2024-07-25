@@ -2,9 +2,10 @@ import Topbar from "./scenes/global/Topbar";
 import ODashboard from "./scenes/OwnerView/Odashboard";
 import LoginForm from "./scenes/LoginForm/LoginForm";
 import Setup from "./scenes/OwnerView/FirstTimeOwner/Setup"
+import { Component } from "react";
 import { colorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth,db } from './scenes/LoginForm/config';
@@ -12,6 +13,11 @@ import { doc, getDoc } from 'firebase/firestore';
 import MenuSetup from "./scenes/OwnerView/FirstTimeOwner/MenuSetup";
 import TableSetup from "./scenes/OwnerView/FirstTimeOwner/TableSetup";
 import ProfileSetup from "./scenes/OwnerView/FirstTimeOwner/ProfileSetup";
+import Chatbot from "./scenes/Chatbot/Chatbot";
+import MenuView from "./scenes/OwnerView/MenuView";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import NotLoggedIn from "./scenes/global/NotLoggedIn";
+import KitchenTopbar from "./scenes/global/KitchenTopbar";
 
 
 
@@ -58,32 +64,64 @@ if (isFetching) {
           <div className="content">
             <Routes>
               <Route index path="/" element={<LoginForm />} />
+              <Route path="/signin-error" element={<NotLoggedIn/>}/>
               <Route path="/owner-dashboard" element={
-              <>
-                <Topbar/>
-                <ODashboard/>
-              </>}/>
+                <ProtectedRoute user={user}>
+                  <>
+                    <Topbar/>
+                    <ODashboard/>
+                  </>
+              </ProtectedRoute>}/>
+
+              <Route path="/table/:tableId" element={
+                  <ProtectedRoute user={user}>
+                    <Topbar/> 
+                    <MenuView />
+                  </ProtectedRoute>
+                } />
 
               <Route index path="/first-setup" element={
-              <>
-                <Topbar/>
-                <Setup/>
-              </>}/>
+                <ProtectedRoute user={user}>
+                  <>
+                    <Topbar/>
+                    <Setup/>
+                  </>
+              </ProtectedRoute>}/>
               <Route index path="/configure-menu" element={
-              <>
-                <Topbar/>
-                <MenuSetup/>
-              </>}/>
+                <ProtectedRoute user={user}> 
+                  <>
+                    <Topbar/>
+                    <MenuSetup/>
+                  </>
+              </ProtectedRoute>}/>
               <Route index path="/configure-tables" element={
-              <>
-                <Topbar/>
-                <TableSetup/>
-              </>}/>
+                <ProtectedRoute user={user}>
+                  <>
+                    <Topbar/>
+                    <TableSetup/>
+                  </>
+              </ProtectedRoute>}/>
               <Route index path="/configure-profile" element={
-              <>
-                <Topbar/>
-                <ProfileSetup/>
-              </>}/>
+                <ProtectedRoute user={user}> 
+                  <>
+                    <Topbar/>
+                    <ProfileSetup/>
+                  </>
+              </ProtectedRoute>}/>
+              <Route path="/kitchen-view" element={
+                <ProtectedRoute user={user}>
+                  <>
+                    <KitchenTopbar/>
+                  </>
+              </ProtectedRoute>}/>
+              <Route index path="/configure-tables" element={
+                <ProtectedRoute user={user}>
+                  <>
+                    <Topbar/>
+                    <TableSetup/>
+                  </>
+              </ProtectedRoute>}/>
+              <Route index path="/chatbot" element={<Chatbot></Chatbot>}/>
               {/* Add more routes here for other pages if needed */}
             </Routes>
           </div>

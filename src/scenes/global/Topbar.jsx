@@ -2,7 +2,6 @@ import { Box, Icon, IconButton, useTheme} from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import { useContext, useState, useEffect } from 'react';
 import { colorModeContext, tokens } from '../../theme';
-import SettingsIcon from '@mui/icons-material/Settings';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import SearchIcon from '@mui/icons-material/Search';
@@ -10,10 +9,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import logo from '../../components/logo.png';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {db} from '../LoginForm/config';
 import { getAuth } from 'firebase/auth';
-import {query, where, collection, getDocs} from 'firebase/firestore';
+import {query, where, collection, getDocs, doc, onSnapshot} from 'firebase/firestore';
+import SettingsMenu from './SettingsMenu';
 
 const Topbar = () => {
     const theme = useTheme();
@@ -51,7 +51,21 @@ const Topbar = () => {
         };
 
         fetchTableData();
-    }, [user, totalTables, dineIn, takeAway]);
+    }, [user]);
+
+    // useEffect(() => {
+    //     const unsubscribe = onSnapshot(doc(db, 'profile-info', user.uid), (doc) => {
+    //       const profileData = doc.data();
+    //       setRestName(profileData.rest_name);
+    //       setDineIn(profileData.numTables);
+    //       setTakeAway(profileData.numTakeaway);
+    //       setTotalTables(profileData.numTables + profileData.numTakeaway);
+    //     }, (error) => {
+    //       console.error("Error fetching table data:", error);
+    //     });
+      
+    //     return unsubscribe; // Function to unsubscribe on component unmount
+    //   }, [user]); // Dependency on user object
 
     return (
         <Box display="flex" p={2} justifyContent="space-between">
@@ -68,7 +82,9 @@ const Topbar = () => {
                 <Typography variant="h5" color="textSecondary" sx={{mr:2}}> 
                     Takeaway: {takeAway}
                 </Typography>
-
+                <Typography variant="h5" color="textSecondary" sx={{mr:2}}>
+                    Current View: Table Dashboard View
+                </Typography>
             </Box>
             <Box display="flex" alignContent="center">
             </Box>
@@ -80,9 +96,7 @@ const Topbar = () => {
             </Box>
 
             <Box display="flex">
-                <IconButton>
-                    <SettingsIcon />
-                </IconButton>
+                <SettingsMenu/>
                 <IconButton onClick={colorMode.toggleColorMode}>
                     {theme.palette.mode === "dark" ? (
                         <ModeNightIcon />

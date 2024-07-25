@@ -59,7 +59,7 @@ const MenuSetup = () => {
     };
   
     fetchCategories();
-  }, [user]);
+  }, [user, categoryTitle]);
   
 
   // Function to generate random pastel color from tokens
