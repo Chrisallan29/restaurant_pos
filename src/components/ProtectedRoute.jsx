@@ -3,7 +3,6 @@ import LoginForm from "../scenes/LoginForm/LoginForm";
 import { Component } from "react";
 
 export const ProtectedRoute = ({children, user}) => {
-    console.log(user)
     return user ? children : <Navigate to="/signin-error"></Navigate>;
 };
 

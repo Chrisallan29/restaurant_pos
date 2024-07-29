@@ -104,8 +104,8 @@ const Topbar = () => {
                         <Brightness7Icon />
                     )}
                 </IconButton>
-                <IconButton>
-                    <PersonIcon onClick={handleFirstSetup} />
+                <IconButton onClick={handleFirstSetup}>
+                    <PersonIcon />
                 </IconButton>
             </Box>
         </Box>

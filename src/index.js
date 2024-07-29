@@ -19,6 +19,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { colorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import { AuthProvider } from './AuthContext';
 
 const Root = () => {
   const [theme, colorMode] = useMode();
@@ -28,7 +29,9 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
+        <AuthProvider>
           <App />
+        </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>
     </colorModeContext.Provider>

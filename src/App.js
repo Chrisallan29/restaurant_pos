@@ -14,10 +14,11 @@ import MenuSetup from "./scenes/OwnerView/FirstTimeOwner/MenuSetup";
 import TableSetup from "./scenes/OwnerView/FirstTimeOwner/TableSetup";
 import ProfileSetup from "./scenes/OwnerView/FirstTimeOwner/ProfileSetup";
 import Chatbot from "./scenes/Chatbot/Chatbot";
-import MenuView from "./scenes/OwnerView/MenuView";
+import MenuView from "./scenes/OwnerView/MenuView/MenuView";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import NotLoggedIn from "./scenes/global/NotLoggedIn";
-import KitchenTopbar from "./scenes/global/KitchenTopbar";
+import PaymentView from "./scenes/OwnerView/MenuView/PaymentView";
+import KitchenView from "./scenes/OwnerView/MenuView/KitchenView"
 
 
 
@@ -80,6 +81,13 @@ if (isFetching) {
                   </ProtectedRoute>
                 } />
 
+              <Route path="/table/:tableId/payment" element={
+                  <ProtectedRoute user={user}>
+                    <Topbar/> 
+                    <PaymentView />
+                  </ProtectedRoute>
+                } />
+
               <Route index path="/first-setup" element={
                 <ProtectedRoute user={user}>
                   <>
@@ -111,7 +119,7 @@ if (isFetching) {
               <Route path="/kitchen-view" element={
                 <ProtectedRoute user={user}>
                   <>
-                    <KitchenTopbar/>
+                    <KitchenView/>
                   </>
               </ProtectedRoute>}/>
               <Route index path="/configure-tables" element={
